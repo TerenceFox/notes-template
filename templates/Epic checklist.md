@@ -1,0 +1,20 @@
+
+- Ticket Creation (To Do)
+  - Epic is presented to the team
+  - Tickets breakdown is provided by the team
+  - Tickets are created and moved to Ready For Analysis
+- Ticket Time (Present tickets)
+- Offline Analysis
+  - Coordinate with dev to complete tech analysis
+  - Create Acceptance Criteria
+  - Move ticket to "Ready for Dev" once aligned
+- Development (Ready for Dev)
+  - Monitor progress and address any blockers
+- Testing (In Progress)
+  - Review feature
+  - Demo
+  - Ready for release
+- Release (Ready for Release)
+  - Assign to release manager, coordinate release
+  - Wiki page for ops handoff (if new feature)
+  - Ops presentation

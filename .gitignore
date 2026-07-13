@@ -1,0 +1,11 @@
+# Obsidian per-machine state
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/plugins/*/data.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local scratch / attachments (decide per policy whether to track these)
+.trash/
