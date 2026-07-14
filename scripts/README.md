@@ -2,6 +2,48 @@
 
 Shell helpers for working in this vault.
 
+## `tdl.sh` — tmux dev layout for coding projects
+
+`tdl` is the full dev layout: **editor left**, **AI pane right (30% width)**, and
+a **terminal pane along the bottom (15% height)** for running commands and tests.
+It originates from the Omarchy defaults
+(`~/.local/share/omarchy/default/bash/fns/tmux`). `tdln` (below) is the
+note-taking variant — the same layout minus the bottom terminal pane.
+
+### Usage
+
+```
+tdl <c|cx|codex|other_ai> [<second_ai>]
+```
+
+| Arg | Meaning |
+| --- | --- |
+| `$1` ai | Command launched in the right pane (e.g. `claude`). Required. |
+| `$2` ai2 | Optional second AI, stacked below the first in its own pane. |
+
+The editor opens on the current directory (`$EDITOR .`). Run it from a project
+root, e.g. `cd ~/code/myproject && tdl claude`.
+
+### Setup
+
+Source it from your shell rc (`~/.bashrc` on Linux, `~/.zshrc` on macOS):
+
+```bash
+source ~/notes/scripts/tdl.sh
+```
+
+### Requirements
+
+- You must already be **inside a tmux session** — `tdl` errors out otherwise.
+- `$EDITOR` must be set.
+- The AI command (`claude` etc.) must be installed and on `PATH`.
+
+### Related
+
+- Omarchy ships two siblings in the same file: `tdlm` (one `tdl` window per
+  subdirectory of the current dir) and `tsl` (an N-pane swarm running the same
+  command in every pane).
+
 ## `tdln.sh` — tmux dev layout for note-taking
 
 `tdln` is the function behind the `notes` shell alias:
