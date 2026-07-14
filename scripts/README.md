@@ -50,3 +50,103 @@ source ~/notes/scripts/tdln.sh
 
 - The original lives in `~/.bashrc` alongside `tdlh` (a half-width variant that
   also adds a bottom terminal pane).
+
+## `tmux.conf` — tmux config & key bindings
+
+A copy of the active tmux config at `~/.config/tmux/tmux.conf` — the single
+source of truth for the key bindings the `notes`/`tdln` workflow relies on. (It
+is a lightly customized fork of the Omarchy default; the Omarchy copy at
+`~/.local/share/omarchy/config/tmux/tmux.conf` is **not** sourced.)
+
+**Prefix:** `Ctrl-Space` (secondary: `Ctrl-b`)
+
+Bindings below are pressed **after the prefix** unless marked _(no prefix)_.
+
+| Key | Action |
+| --- | --- |
+| `q` | Reload config (`source-file`) |
+| `h` | Split pane horizontally (new pane below) |
+| `v` | Split pane vertically (new pane right) |
+| `x` | Kill pane |
+| `r` | Rename current window |
+| `c` | New window (same path) |
+| `k` | Kill window |
+| `R` | Rename session |
+| `C` | New session (same path) |
+| `K` | Kill session |
+| `P` / `N` | Previous / next session |
+
+### No-prefix bindings
+
+| Key | Action |
+| --- | --- |
+| `Ctrl-Alt-←/→/↑/↓` | Move focus between panes |
+| `Ctrl-Alt-Shift-←/→/↑/↓` | Resize pane (5 cells) |
+| `Alt-1` … `Alt-9` | Jump to window 1–9 |
+| `Alt-←` / `Alt-→` | Previous / next window |
+| `Alt-Shift-←` / `Alt-Shift-→` | Move current window left / right |
+| `Alt-↑` / `Alt-↓` | Previous / next session |
+
+### Copy mode (vi)
+
+| Key | Action |
+| --- | --- |
+| `v` | Begin selection |
+| `y` | Copy selection and exit copy mode |
+
+### Applying it
+
+This file is a **reference copy** for the vault. Your live config stays at
+`~/.config/tmux/tmux.conf`. To make this copy the live one:
+
+```bash
+cp ~/notes/scripts/tmux.conf ~/.config/tmux/tmux.conf
+tmux source-file ~/.config/tmux/tmux.conf   # or press <prefix> q
+```
+
+## Setting this up on a Mac (work laptop)
+
+The paths differ slightly from Linux/Omarchy. Two files to place:
+
+### 1. tmux config
+
+Modern tmux (3.1+, which Homebrew installs) reads `~/.config/tmux/tmux.conf`,
+so the same path works:
+
+```bash
+brew install tmux                       # if not already installed
+mkdir -p ~/.config/tmux
+cp ~/notes/scripts/tmux.conf ~/.config/tmux/tmux.conf
+tmux source-file ~/.config/tmux/tmux.conf
+```
+
+If you're on an older tmux that only reads the legacy path, use `~/.tmux.conf`
+instead:
+
+```bash
+cp ~/notes/scripts/tmux.conf ~/.tmux.conf
+```
+
+### 2. The `notes` alias + `tdln` function
+
+macOS defaults to **zsh**, so these go in `~/.zshrc` (not `~/.bashrc`). The
+function is zsh-compatible as written. Add to `~/.zshrc`:
+
+```zsh
+# tmux dev layout used by the `notes` alias
+source ~/notes/scripts/tdln.sh
+alias notes='cd ~/notes && tdln claude "" ObsidianToday'
+```
+
+Then reload: `source ~/.zshrc` (or open a new terminal).
+
+**Caveats for the Mac setup:**
+
+- Adjust `~/notes` in the alias/`source` line to wherever you clone this vault
+  on the work laptop.
+- `tdln` requires `$EDITOR` set to a Vim-like editor and an `ObsidianToday`
+  editor command — set those up on the Mac too, or drop the third argument to
+  just open the editor on the vault directory.
+- `claude` (or whichever AI command) must be installed and on `PATH`.
+- You must launch `tmux` before running `notes`; the function errors out
+  otherwise.
